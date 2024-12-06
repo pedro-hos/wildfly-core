@@ -5,13 +5,6 @@
 
 package org.jboss.as.jmx.test.util;
 
-import static org.jboss.as.controller.descriptions.ModelDescriptionConstants.FAILED;
-import static org.jboss.as.controller.descriptions.ModelDescriptionConstants.FAILURE_DESCRIPTION;
-import static org.jboss.as.controller.descriptions.ModelDescriptionConstants.OP;
-import static org.jboss.as.controller.descriptions.ModelDescriptionConstants.OP_ADDR;
-import static org.jboss.as.controller.descriptions.ModelDescriptionConstants.OUTCOME;
-import static org.jboss.as.controller.descriptions.ModelDescriptionConstants.RESULT;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -22,13 +15,11 @@ import org.jboss.as.controller.ControlledProcessState;
 import org.jboss.as.controller.ManagementModel;
 import org.jboss.as.controller.ModelController;
 import org.jboss.as.controller.OperationContext;
-import org.jboss.as.controller.OperationFailedException;
 import org.jboss.as.controller.PathAddress;
 import org.jboss.as.controller.PathElement;
 import org.jboss.as.controller.ProcessType;
 import org.jboss.as.controller.ResourceBuilder;
 import org.jboss.as.controller.access.management.DelegatingConfigurableAuthorizer;
-import org.jboss.as.controller.audit.AuditLogger;
 import org.jboss.as.controller.audit.ManagedAuditLogger;
 import org.jboss.as.controller.descriptions.NonResolvingResourceDescriptionResolver;
 import org.jboss.as.controller.persistence.AbstractConfigurationPersister;
@@ -44,68 +35,23 @@ import org.jboss.msc.service.ServiceContainer;
 import org.jboss.msc.service.ServiceTarget;
 import org.jboss.staxmapper.XMLElementWriter;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.wildfly.security.auth.server.SecurityIdentity;
+import org.wildfly.test.controller.base.ControllerTestBase;
 
 /**
  * @author Emanuel Muckenhuber
  */
-public abstract class AbstractControllerTestBase {
-
+public abstract class AbstractControllerTestBase extends ControllerTestBase {
 
     protected abstract void initModel(ManagementModel managementModel);
 
-    private ServiceContainer container;
-    private ModelController controller;
-    protected final ProcessType processType;
-
     protected AbstractControllerTestBase(ProcessType processType) {
-        this.processType = processType;
+        super(processType);
     }
 
     protected AbstractControllerTestBase() {
         this(ProcessType.EMBEDDED_SERVER);
-    }
-
-    public ModelController getController() {
-        return controller;
-    }
-
-    public ServiceContainer getContainer() {
-        return container;
-    }
-
-    protected ModelNode createOperation(String operationName, String... address) {
-        ModelNode operation = new ModelNode();
-        operation.get(OP).set(operationName);
-        if (address.length > 0) {
-            for (String addr : address) {
-                operation.get(OP_ADDR).add(addr);
-            }
-        } else {
-            operation.get(OP_ADDR).setEmptyList();
-        }
-
-        return operation;
-    }
-
-    public ModelNode executeForResult(ModelNode operation) throws OperationFailedException {
-        ModelNode rsp = getController().execute(operation, null, null, null);
-        if (FAILED.equals(rsp.get(OUTCOME).asString())) {
-            ModelNode fd = rsp.get(FAILURE_DESCRIPTION);
-            throw new OperationFailedException(fd.toString(), fd);
-        }
-        return rsp.get(RESULT);
-    }
-
-    public void executeForFailure(ModelNode operation) throws OperationFailedException {
-        try {
-            executeForResult(operation);
-            Assert.fail("Should have given error");
-        } catch (OperationFailedException expected) {
-            // ignore
-        }
     }
 
     @Before
@@ -117,8 +63,6 @@ public abstract class AbstractControllerTestBase {
         builder.install();
         svc.awaitStartup(30, TimeUnit.SECONDS);
         controller = svc.getValue();
-        //ModelNode setup = Util.getEmptyOperation("setup", new ModelNode());
-        //controller.execute(setup, null, null, null);
     }
 
     @After
@@ -133,14 +77,6 @@ public abstract class AbstractControllerTestBase {
                 container = null;
             }
         }
-    }
-
-    protected void addBootOperations(List<ModelNode> bootOperations) {
-
-    }
-
-    protected ManagedAuditLogger getAuditLogger(){
-        return AuditLogger.NO_OP_LOGGER;
     }
 
     protected DelegatingConfigurableAuthorizer getAuthorizer() {
