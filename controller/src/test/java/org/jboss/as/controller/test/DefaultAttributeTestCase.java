@@ -29,7 +29,7 @@ import org.junit.Test;
  *
  * @author <a href="kabir.khan@jboss.com">Kabir Khan</a>
  */
-public class DefaultAttributeTestCase extends AbstractControllerTestBase {
+public class DefaultAttributeTestCase extends ControllerTestBase {
 
     @Test
     public void testCannotAccessAttributeWhenResourceDoesNotExist() throws Exception {

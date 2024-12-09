@@ -31,7 +31,7 @@ import org.jboss.as.controller.operations.global.GlobalNotifications;
 import org.jboss.as.controller.operations.global.GlobalOperationHandlers;
 import org.jboss.as.controller.registry.ManagementResourceRegistration;
 import org.jboss.as.controller.registry.Resource;
-import org.jboss.as.controller.test.AbstractControllerTestBase;
+import org.jboss.as.controller.test.ControllerTestBase;
 import org.jboss.dmr.ModelNode;
 import org.jboss.dmr.ModelType;
 import org.junit.Test;
@@ -41,7 +41,7 @@ import org.junit.Test;
  *
  * @author <a href="kabir.khan@jboss.com">Kabir Khan</a>
  */
-public class RemoveResourceTestCase extends AbstractControllerTestBase {
+public class RemoveResourceTestCase extends ControllerTestBase {
 
     private static final PathElement ONE = PathElement.pathElement("one");
     private static final PathElement ONE_A = PathElement.pathElement("one", "a");
@@ -176,8 +176,8 @@ public class RemoveResourceTestCase extends AbstractControllerTestBase {
 
 
     @Override
-    protected AbstractControllerTestBase.ModelControllerService createModelControllerService(ProcessType processType) {
-        return new AbstractControllerTestBase.ModelControllerService(processType, new RootResourceDefinition());
+    protected ControllerTestBase.ModelControllerService createModelControllerService(ProcessType processType) {
+        return new ControllerTestBase.ModelControllerService(processType, new RootResourceDefinition());
     }
 
     @Override

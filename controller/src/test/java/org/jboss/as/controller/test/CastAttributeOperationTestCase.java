@@ -43,7 +43,7 @@ import org.junit.Test;
  *
  * @author <a href="mailto:ehugonne@redhat.com">Emmanuel Hugonnet</a> (c) 2014 Red Hat, inc.
  */
-public class CastAttributeOperationTestCase extends AbstractControllerTestBase {
+public class CastAttributeOperationTestCase extends ControllerTestBase {
 
     private static final ParameterValidator ACCEPT_ALL = new ParameterValidator() {
         @Override

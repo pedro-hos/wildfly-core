@@ -47,7 +47,7 @@ import org.junit.Test;
  *
  * @author <a href="http://jmesnil.net/">Jeff Mesnil</a> (c) 2014 Red Hat inc.
  */
-public class ReadResourceWithRuntimeResourceTestCase extends AbstractControllerTestBase {
+public class ReadResourceWithRuntimeResourceTestCase extends ControllerTestBase {
 
     public static final String FAILURE_DESC = "Fail with a failure description";
 

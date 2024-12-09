@@ -5,21 +5,14 @@
 
 package org.jboss.as.host.controller.util;
 
-import static org.jboss.as.controller.descriptions.ModelDescriptionConstants.FAILED;
-import static org.jboss.as.controller.descriptions.ModelDescriptionConstants.FAILURE_DESCRIPTION;
-import static org.jboss.as.controller.descriptions.ModelDescriptionConstants.OP;
-import static org.jboss.as.controller.descriptions.ModelDescriptionConstants.OP_ADDR;
-import static org.jboss.as.controller.descriptions.ModelDescriptionConstants.OUTCOME;
 import static org.jboss.as.controller.descriptions.ModelDescriptionConstants.READ_RESOURCE_OPERATION;
 import static org.jboss.as.controller.descriptions.ModelDescriptionConstants.RECURSIVE;
-import static org.jboss.as.controller.descriptions.ModelDescriptionConstants.RESULT;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,16 +33,13 @@ import org.jboss.as.controller.ProxyController;
 import org.jboss.as.controller.ResourceBuilder;
 import org.jboss.as.controller.ResourceDefinition;
 import org.jboss.as.controller.RunningMode;
-import org.jboss.as.controller.audit.AuditLogger;
 import org.jboss.as.controller.audit.ManagedAuditLogger;
 import org.jboss.as.controller.capability.registry.ImmutableCapabilityRegistry;
 import org.jboss.as.controller.descriptions.NonResolvingResourceDescriptionResolver;
 import org.jboss.as.controller.extension.ExtensionRegistry;
 import org.jboss.as.controller.operations.common.Util;
-import org.jboss.as.controller.persistence.AbstractConfigurationPersister;
 import org.jboss.as.controller.persistence.ConfigurationPersistenceException;
 import org.jboss.as.controller.persistence.ExtensibleConfigurationPersister;
-import org.jboss.as.controller.persistence.ModelMarshallingContext;
 import org.jboss.as.controller.registry.ManagementResourceRegistration;
 import org.jboss.as.controller.registry.Resource;
 import org.jboss.as.controller.services.path.PathManagerService;
@@ -71,27 +61,22 @@ import org.jboss.as.repository.HostFileRepository;
 import org.jboss.as.version.ProductConfig;
 import org.jboss.dmr.ModelNode;
 import org.jboss.msc.service.ServiceBuilder;
-import org.jboss.msc.service.ServiceContainer;
 import org.jboss.msc.service.ServiceName;
 import org.jboss.msc.service.ServiceTarget;
-import org.jboss.staxmapper.XMLElementWriter;
 import org.jboss.vfs.VirtualFile;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
+import org.wildfly.test.controller.base.AbstractControllerTestBase;
 
 /**
  * @author Emanuel Muckenhuber
  */
-public abstract class AbstractControllerTestBase {
+public abstract class HostControllerTestBase extends AbstractControllerTestBase {
 
 
     private final boolean useDelegateRootResourceDefinition;
-    private ServiceContainer container;
-    private ModelController controller;
     private TestModelControllerService controllerService;
     protected final String hostName;
-    protected final ProcessType processType;
     protected final LocalHostControllerInfoImpl hostControllerInfo;
     protected final HostControllerEnvironment hostControllerEnvironment;
     protected final DomainController domainController;
@@ -99,17 +84,17 @@ public abstract class AbstractControllerTestBase {
     private final TestDelegatingResourceDefiniton rootResourceDefinition;
     protected final CapabilityRegistry capabilityRegistry;
 
-    protected AbstractControllerTestBase() {
+    protected HostControllerTestBase() {
         this(ProcessType.EMBEDDED_SERVER);
     }
 
-    protected AbstractControllerTestBase(ProcessType processType) {
+    protected HostControllerTestBase(ProcessType processType) {
         this("secondary", processType, false);
     }
 
-    protected AbstractControllerTestBase(String hostName, ProcessType processType, boolean useDelegateRootResourceDefinition) {
+    protected HostControllerTestBase(String hostName, ProcessType processType, boolean useDelegateRootResourceDefinition) {
+        super(processType);
         this.hostName = hostName;
-        this.processType = processType;
         this.useDelegateRootResourceDefinition = useDelegateRootResourceDefinition;
         hostControllerEnvironment = createHostControllerEnvironment(hostName);
         hostControllerInfo = new LocalHostControllerInfoImpl(new ControlledProcessState(false), hostControllerEnvironment);
@@ -118,55 +103,13 @@ public abstract class AbstractControllerTestBase {
         capabilityRegistry = new CapabilityRegistry(processType.isServer());
     }
 
-
-    public ModelController getController() {
-        return controller;
-    }
-
-    public ServiceContainer getContainer() {
-        return container;
-    }
-
     public TestModelControllerService getControllerService() {
         return controllerService;
     }
 
-    protected ModelNode createOperation(String operationName, String... address) {
-        ModelNode operation = new ModelNode();
-        operation.get(OP).set(operationName);
-        if (address.length > 0) {
-            for (String addr : address) {
-                operation.get(OP_ADDR).add(addr);
-            }
-        } else {
-            operation.get(OP_ADDR).setEmptyList();
-        }
-
-        return operation;
-    }
-
-    public ModelNode executeForResult(ModelNode operation) throws OperationFailedException {
-        ModelNode rsp = getController().execute(operation, null, null, null);
-        if (FAILED.equals(rsp.get(OUTCOME).asString())) {
-            ModelNode fd = rsp.get(FAILURE_DESCRIPTION);
-            throw new OperationFailedException(fd.toString(), fd);
-        }
-        return rsp.get(RESULT);
-    }
-
-    public void executeForFailure(ModelNode operation) throws OperationFailedException {
-        try {
-            executeForResult(operation);
-            Assert.fail("Should have given error");
-        } catch (OperationFailedException expected) {
-            // ignore
-        }
-    }
-
     @Before
     public void setupController() throws InterruptedException {
-        container = ServiceContainer.Factory.create("test");
-        ServiceTarget target = container.subTarget();
+        ServiceTarget target = getServiceTarget();
         if (useDelegateRootResourceDefinition) {
             initializer = createInitializer();
             controllerService = new ModelControllerService(getAuditLogger(), rootResourceDefinition);
@@ -177,29 +120,12 @@ public abstract class AbstractControllerTestBase {
         builder.install();
         controllerService.awaitStartup(30, TimeUnit.SECONDS);
         controller = controllerService.getValue();
-        //ModelNode setup = Util.getEmptyOperation("setup", new ModelNode());
-        //controller.execute(setup, null, null, null);
     }
 
     @After
     public void shutdownServiceContainer() {
-        if (container != null) {
-            container.shutdown();
-            try {
-                container.awaitTermination(30, TimeUnit.SECONDS);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            } finally {
-                container = null;
-            }
-        }
+        shutdownContainer();
     }
-
-    protected void addBootOperations(List<ModelNode> bootOperations) throws Exception {
-
-    }
-
-    protected abstract void initModel(ManagementModel managementModel);
 
     protected DelegatingResourceDefinitionInitializer createInitializer() {
         throw new IllegalStateException(this.getClass().getName() + " created with useDelegateRootResourceDefinition=false, needs to override createInitializer()");
@@ -210,10 +136,6 @@ public abstract class AbstractControllerTestBase {
             throw new IllegalStateException("Test is not set up to use a delegating resource definition");
         }
         return rootResourceDefinition;
-    }
-
-    protected ManagedAuditLogger getAuditLogger(){
-        return AuditLogger.NO_OP_LOGGER;
     }
 
     protected ModelNode readResourceRecursive() throws Exception {
@@ -262,14 +184,14 @@ public abstract class AbstractControllerTestBase {
     protected class ModelControllerService extends TestModelControllerService {
 
         public ModelControllerService(final ManagedAuditLogger auditLogger) {
-            super(AbstractControllerTestBase.this.processType, new EmptyConfigurationPersister(), new ControlledProcessState(true),
+            super(HostControllerTestBase.this.processType, new EmptyConfigurationPersister(), new ControlledProcessState(true),
                     ResourceBuilder.Factory.create(PathElement.pathElement("root"), NonResolvingResourceDescriptionResolver.INSTANCE).build(),
                     auditLogger, initializer, capabilityRegistry);
         }
 
         public ModelControllerService(final ManagedAuditLogger auditLogger,
                                DelegatingResourceDefinition rootResourceDefinition) {
-            super(AbstractControllerTestBase.this.processType, new EmptyConfigurationPersister(), new ControlledProcessState(true),
+            super(HostControllerTestBase.this.processType, new EmptyConfigurationPersister(), new ControlledProcessState(true),
                     rootResourceDefinition, auditLogger, initializer, capabilityRegistry);
         }
 
@@ -286,116 +208,12 @@ public abstract class AbstractControllerTestBase {
 
         protected void initModel(ManagementModel managementModel, Resource modelControllerResource) {
             try {
-                AbstractControllerTestBase.this.initModel(managementModel);
+                HostControllerTestBase.this.initModel(managementModel);
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
     }
-
-    public static class EmptyConfigurationPersister extends AbstractConfigurationPersister {
-
-        public EmptyConfigurationPersister() {
-            super(null);
-        }
-
-        public EmptyConfigurationPersister(XMLElementWriter<ModelMarshallingContext> rootDeparser) {
-            super(rootDeparser);
-        }
-
-        @Override
-        public PersistenceResource store(final ModelNode model, Set<PathAddress> affectedAddresses) {
-            return NullPersistenceResource.INSTANCE;
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public List<ModelNode> load() {
-            return new ArrayList<ModelNode>();
-        }
-
-        private static class NullPersistenceResource implements PersistenceResource {
-
-            private static final NullPersistenceResource INSTANCE = new NullPersistenceResource();
-
-            @Override
-            public void commit() {
-            }
-
-            @Override
-            public void rollback() {
-            }
-        }
-    }
-
-
-//
-//
-//    public class TestHostControllerInfo implements LocalHostControllerInfo {
-//        public String getLocalHostName() {
-//            return hostName;
-//        }
-//
-//        public boolean isPrimaryDomainController() {
-//            return false;
-//        }
-//
-//        public String getNativeManagementInterface() {
-//            return null;
-//        }
-//
-//        public int getNativeManagementPort() {
-//            return 0;
-//        }
-//
-//        public String getNativeManagementSecurityRealm() {
-//            return null;
-//        }
-//
-//        public String getHttpManagementInterface() {
-//            return null;
-//        }
-//
-//        public int getHttpManagementPort() {
-//            return 0;
-//        }
-//
-//        public String getHttpManagementSecureInterface() {
-//            return null;
-//        }
-//
-//        public int getHttpManagementSecurePort() {
-//            return 0;
-//        }
-//
-//        public String getHttpManagementSecurityRealm() {
-//            return null;
-//        }
-//
-//        public String getRemoteDomainControllerUsername() {
-//            return null;
-//        }
-//
-//        public List<DiscoveryOption> getRemoteDomainControllerDiscoveryOptions() {
-//            return null;
-//        }
-//
-//        public ControlledProcessState.State getProcessState() {
-//            return null;
-//        }
-//
-//        @Override
-//        public boolean isRemoteDomainControllerIgnoreUnaffectedConfiguration() {
-//            return false;
-//        }
-//
-//        @Override
-//        public Collection<String> getAllowedOrigins() {
-//            return Collections.EMPTY_LIST;
-//        }
-//    };
 
 
     private static HostControllerEnvironment createHostControllerEnvironment(String hostName) {

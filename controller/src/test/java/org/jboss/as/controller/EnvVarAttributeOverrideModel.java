@@ -22,7 +22,7 @@ import org.jboss.as.controller.descriptions.NonResolvingResourceDescriptionResol
 import org.jboss.as.controller.operations.global.GlobalNotifications;
 import org.jboss.as.controller.operations.global.GlobalOperationHandlers;
 import org.jboss.as.controller.registry.ManagementResourceRegistration;
-import org.jboss.as.controller.test.AbstractControllerTestBase;
+import org.jboss.as.controller.test.ControllerTestBase;
 import org.jboss.dmr.ModelNode;
 import org.jboss.dmr.ModelType;
 import org.junit.Assume;
@@ -32,7 +32,7 @@ import org.junit.Test;
 /**
  * @author jmesnil
  */
-public abstract class EnvVarAttributeOverrideModel extends AbstractControllerTestBase {
+public abstract class EnvVarAttributeOverrideModel extends ControllerTestBase {
     private static final SimpleAttributeDefinition MY_ATTR = new SimpleAttributeDefinitionBuilder("my-attr", ModelType.INT, true)
             .setAllowExpression(true)
             .build();

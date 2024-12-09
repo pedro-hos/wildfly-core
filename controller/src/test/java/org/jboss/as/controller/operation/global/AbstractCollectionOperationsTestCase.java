@@ -22,7 +22,7 @@ import org.jboss.as.controller.StringListAttributeDefinition;
 import org.jboss.as.controller.operations.global.GlobalNotifications;
 import org.jboss.as.controller.operations.global.GlobalOperationHandlers;
 import org.jboss.as.controller.registry.ManagementResourceRegistration;
-import org.jboss.as.controller.test.AbstractControllerTestBase;
+import org.jboss.as.controller.test.ControllerTestBase;
 import org.jboss.dmr.ModelNode;
 import org.junit.Assert;
 import org.junit.Test;
@@ -30,7 +30,7 @@ import org.junit.Test;
 /**
  * @author Tomaz Cerar (c) 2014 Red Hat Inc.
  */
-public abstract class AbstractCollectionOperationsTestCase extends AbstractControllerTestBase {
+public abstract class AbstractCollectionOperationsTestCase extends ControllerTestBase {
 
     protected static final String LIST_ATTRIBUTE_NAME = "my-list-attribute";
     protected static final String MAP_ATTRIBUTE_NAME = "my-map-attribute";

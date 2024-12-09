@@ -46,7 +46,7 @@ import org.junit.Test;
  *
  * @author <a href="kabir.khan@jboss.com">Kabir Khan</a>
  */
-public class AliasContextTestCase extends AbstractControllerTestBase {
+public class AliasContextTestCase extends ControllerTestBase {
 
     private static final String MAIN = "main";
     private static final String ALIASED = "aliased";

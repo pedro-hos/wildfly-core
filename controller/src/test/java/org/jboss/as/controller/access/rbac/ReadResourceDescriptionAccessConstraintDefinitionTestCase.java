@@ -43,7 +43,7 @@ import org.jboss.as.controller.descriptions.NonResolvingResourceDescriptionResol
 import org.jboss.as.controller.operations.common.Util;
 import org.jboss.as.controller.operations.global.GlobalOperationHandlers;
 import org.jboss.as.controller.registry.ManagementResourceRegistration;
-import org.jboss.as.controller.test.AbstractControllerTestBase;
+import org.jboss.as.controller.test.ControllerTestBase;
 import org.jboss.dmr.ModelNode;
 import org.jboss.dmr.ModelType;
 import org.jboss.dmr.Property;
@@ -54,7 +54,7 @@ import org.junit.Test;
  *
  * @author <a href="kabir.khan@jboss.com">Kabir Khan</a>
  */
-public class ReadResourceDescriptionAccessConstraintDefinitionTestCase extends AbstractControllerTestBase {
+public class ReadResourceDescriptionAccessConstraintDefinitionTestCase extends ControllerTestBase {
 
     private static final String SOCKET_CONFIG_NAME = SensitivityClassification.SOCKET_CONFIG.getName();
     private static final String DEPLOYMENT_NAME = ApplicationTypeConfig.DEPLOYMENT.getName();
@@ -205,8 +205,8 @@ public class ReadResourceDescriptionAccessConstraintDefinitionTestCase extends A
     }
 
     @Override
-    protected AbstractControllerTestBase.ModelControllerService createModelControllerService(ProcessType processType) {
-        return new AbstractControllerTestBase.ModelControllerService(processType, new RootResourceDefinition());
+    protected ControllerTestBase.ModelControllerService createModelControllerService(ProcessType processType) {
+        return new ControllerTestBase.ModelControllerService(processType, new RootResourceDefinition());
     }
 
     @Override

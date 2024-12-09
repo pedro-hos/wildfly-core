@@ -9,7 +9,7 @@ import org.jboss.as.controller.descriptions.NonResolvingResourceDescriptionResol
 import org.jboss.as.controller.operations.global.GlobalNotifications;
 import org.jboss.as.controller.operations.global.GlobalOperationHandlers;
 import org.jboss.as.controller.registry.ManagementResourceRegistration;
-import org.jboss.as.controller.test.AbstractControllerTestBase;
+import org.jboss.as.controller.test.ControllerTestBase;
 import org.jboss.dmr.ModelNode;
 import org.jboss.dmr.ModelType;
 import org.junit.Test;
@@ -17,7 +17,7 @@ import org.junit.Test;
 /**
  * @author Tomaz Cerar (c) 2014 Red Hat Inc.
  */
-public class ValidateModelTestCase extends AbstractControllerTestBase {
+public class ValidateModelTestCase extends ControllerTestBase {
     private static final SimpleAttributeDefinition ad = new SimpleAttributeDefinitionBuilder("test", ModelType.STRING, true)
             .setRequires("other", "alter2")
             .build();

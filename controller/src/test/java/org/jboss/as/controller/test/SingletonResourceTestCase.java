@@ -34,7 +34,7 @@ import org.junit.Test;
 /**
  * @author <a href="kabir.khan@jboss.com">Kabir Khan</a>
  */
-public class SingletonResourceTestCase extends AbstractControllerTestBase {
+public class SingletonResourceTestCase extends ControllerTestBase {
 
     private static final String CORE = "core";
     static final String MODEL = "model";

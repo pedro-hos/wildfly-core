@@ -31,7 +31,7 @@ import org.junit.Test;
  *
  * @author <a href="http://jmesnil.net/">Jeff Mesnil</a> (c) 2015 Red Hat inc.
  */
-public class RevertReloadRequiredTestCase extends AbstractControllerTestBase {
+public class RevertReloadRequiredTestCase extends ControllerTestBase {
 
     private static ModelNode createdResource = null;
     private static Throwable throwable = null;

@@ -33,7 +33,7 @@ import org.jboss.as.controller.operations.global.GlobalOperationHandlers;
 import org.jboss.as.controller.registry.ManagementResourceRegistration;
 import org.jboss.as.controller.services.path.PathManager.Event;
 import org.jboss.as.controller.services.path.PathManager.PathEventContext;
-import org.jboss.as.controller.test.AbstractControllerTestBase;
+import org.jboss.as.controller.test.ControllerTestBase;
 import org.jboss.dmr.ModelNode;
 import org.jboss.msc.service.ServiceController;
 import org.jboss.msc.service.ServiceController.State;
@@ -45,7 +45,7 @@ import org.junit.Test;
 /**
  * @author <a href="kabir.khan@jboss.com">Kabir Khan</a>
  */
-public class PathsTestCase extends AbstractControllerTestBase {
+public class PathsTestCase extends ControllerTestBase {
 
     private static final ServiceName PATH_MANAGER_SVC = AbstractControllerService.PATH_MANAGER_CAPABILITY.getCapabilityServiceName();
 

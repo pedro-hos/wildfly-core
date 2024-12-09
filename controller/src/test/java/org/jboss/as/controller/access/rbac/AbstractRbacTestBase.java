@@ -15,13 +15,13 @@ import static org.junit.Assert.assertTrue;
 
 import org.jboss.as.controller.PathAddress;
 import org.jboss.as.controller.operations.common.Util;
-import org.jboss.as.controller.test.AbstractControllerTestBase;
+import org.jboss.as.controller.test.ControllerTestBase;
 import org.jboss.dmr.ModelNode;
 
 /**
  * @author Ladislav Thon <lthon@redhat.com>
  */
-public abstract class AbstractRbacTestBase extends AbstractControllerTestBase {
+public abstract class AbstractRbacTestBase extends ControllerTestBase {
     protected ModelNode executeWithRole(ModelNode operation, StandardRole role) {
         return executeWithRoles(operation, role);
     }

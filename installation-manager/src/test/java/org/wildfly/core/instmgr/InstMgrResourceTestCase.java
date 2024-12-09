@@ -77,7 +77,7 @@ import org.wildfly.test.installationmanager.TestInstallationManagerFactory;
 /**
  * Installation Manager unit tests.
  */
-public class InstMgrResourceTestCase extends AbstractControllerTestBase {
+public class InstMgrResourceTestCase extends InstalationManagerControllerTestBase {
     private static final ServiceName PATH_MANAGER_SVC = AbstractControllerService.PATH_MANAGER_CAPABILITY.getCapabilityServiceName();
     private static final ServiceName MANAGEMENT_EXECUTOR_SVC = AbstractControllerService.EXECUTOR_CAPABILITY.getCapabilityServiceName();
     PathManagerService pathManagerService;

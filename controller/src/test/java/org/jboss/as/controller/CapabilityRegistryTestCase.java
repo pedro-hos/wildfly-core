@@ -31,7 +31,7 @@ import org.jboss.as.controller.operations.global.GlobalNotifications;
 import org.jboss.as.controller.operations.global.GlobalOperationHandlers;
 import org.jboss.as.controller.registry.ManagementResourceRegistration;
 import org.jboss.as.controller.registry.Resource;
-import org.jboss.as.controller.test.AbstractControllerTestBase;
+import org.jboss.as.controller.test.ControllerTestBase;
 import org.jboss.dmr.ModelNode;
 import org.jboss.dmr.ModelType;
 import org.jboss.msc.service.ServiceController;
@@ -47,7 +47,7 @@ import org.xnio.XnioWorker;
 /**
  * @author Tomaz Cerar (c) 2015 Red Hat Inc.
  */
-public class CapabilityRegistryTestCase extends AbstractControllerTestBase {
+public class CapabilityRegistryTestCase extends ControllerTestBase {
 
     // # of capabilities always present
     private static final int MIN_CAP_COUNT = 2;

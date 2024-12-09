@@ -29,7 +29,7 @@ import org.jboss.as.controller.client.impl.AdditionalBootCliScriptInvoker;
 import org.jboss.as.controller.operations.global.GlobalNotifications;
 import org.jboss.as.controller.operations.global.GlobalOperationHandlers;
 import org.jboss.as.controller.registry.ManagementResourceRegistration;
-import org.jboss.as.controller.test.AbstractControllerTestBase;
+import org.jboss.as.controller.test.ControllerTestBase;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -38,7 +38,7 @@ import org.wildfly.security.manager.WildFlySecurityManager;
 /**
  * @author <a href="mailto:kabir.khan@jboss.com">Kabir Khan</a>
  */
-public class BootCliHookTestCase extends AbstractControllerTestBase {
+public class BootCliHookTestCase extends ControllerTestBase {
 
     private File directory;
     private File cliFile;
@@ -362,11 +362,11 @@ public class BootCliHookTestCase extends AbstractControllerTestBase {
         }
     }
 
-    protected AbstractControllerTestBase.ModelControllerService createModelControllerService(ProcessType processType) {
+    protected ControllerTestBase.ModelControllerService createModelControllerService(ProcessType processType) {
         return new BootCliHookModelControllerService(processType, runningModeControl);
     }
 
-    public class BootCliHookModelControllerService extends AbstractControllerTestBase.ModelControllerService {
+    public class BootCliHookModelControllerService extends ControllerTestBase.ModelControllerService {
 
         public BootCliHookModelControllerService(final ProcessType processType, final RunningModeControl runningModeControl) {
             super(processType, runningModeControl, () -> Executors.newSingleThreadExecutor());

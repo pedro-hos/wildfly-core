@@ -53,7 +53,7 @@ import org.junit.Test;
  *
  * @author Brian Stansberry (c) 2015 Red Hat Inc.
  */
-public class DisappearingResourceTestCase extends AbstractControllerTestBase {
+public class DisappearingResourceTestCase extends ControllerTestBase {
 
     private static final PathElement SUBSYSTEM_ELEMENT = PathElement.pathElement(SUBSYSTEM, "mysubsystem");
     private static final PathAddress SUBSYSTEM_ADDRESS = PathAddress.pathAddress(SUBSYSTEM_ELEMENT);

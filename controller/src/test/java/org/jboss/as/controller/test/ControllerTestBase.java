@@ -10,13 +10,10 @@ import static org.jboss.as.controller.descriptions.ModelDescriptionConstants.FAI
 import static org.jboss.as.controller.descriptions.ModelDescriptionConstants.OP;
 import static org.jboss.as.controller.descriptions.ModelDescriptionConstants.OP_ADDR;
 import static org.jboss.as.controller.descriptions.ModelDescriptionConstants.OUTCOME;
-import static org.jboss.as.controller.descriptions.ModelDescriptionConstants.RESULT;
 import static org.jboss.as.controller.descriptions.ModelDescriptionConstants.ROLLED_BACK;
 import static org.junit.Assert.assertFalse;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
@@ -24,8 +21,6 @@ import java.util.function.Supplier;
 import org.jboss.as.controller.CapabilityRegistry;
 import org.jboss.as.controller.ControlledProcessState;
 import org.jboss.as.controller.ManagementModel;
-import org.jboss.as.controller.ModelController;
-import org.jboss.as.controller.OperationContext;
 import org.jboss.as.controller.OperationFailedException;
 import org.jboss.as.controller.PathAddress;
 import org.jboss.as.controller.PathElement;
@@ -38,64 +33,30 @@ import org.jboss.as.controller.TestModelControllerService;
 import org.jboss.as.controller.descriptions.NonResolvingResourceDescriptionResolver;
 import org.jboss.as.controller.notification.NotificationHandlerRegistry;
 import org.jboss.as.controller.operations.common.Util;
-import org.jboss.as.controller.persistence.AbstractConfigurationPersister;
 import org.jboss.as.controller.persistence.ConfigurationPersistenceException;
-import org.jboss.as.controller.persistence.ConfigurationPersister;
-import org.jboss.as.controller.persistence.ModelMarshallingContext;
-import org.jboss.as.controller.registry.ManagementResourceRegistration;
 import org.jboss.as.controller.registry.Resource;
 import org.jboss.dmr.ModelNode;
-import org.jboss.dmr.ModelType;
-import org.jboss.msc.service.ServiceContainer;
 import org.jboss.msc.service.ServiceName;
 import org.jboss.msc.service.ServiceTarget;
-import org.jboss.staxmapper.XMLElementWriter;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.wildfly.test.controller.base.AbstractControllerTestBase;
 
 /**
  * @author Emanuel Muckenhuber
  */
-public abstract class AbstractControllerTestBase {
+public abstract class ControllerTestBase extends AbstractControllerTestBase {
 
-
-    protected abstract void initModel(ManagementModel managementModel);
-
-    protected ServiceContainer container;
-    protected ModelController controller;
-    protected volatile ProcessType processType;
     protected CapabilityRegistry capabilityRegistry;
     private NotificationHandlerRegistry notificationHandlerRegistry;
 
-    protected AbstractControllerTestBase(ProcessType processType) {
-        this.processType = processType;
+    protected ControllerTestBase(ProcessType processType) {
+        super(processType);
     }
 
-    protected AbstractControllerTestBase() {
-        this(ProcessType.EMBEDDED_SERVER);
-    }
-
-    public ModelController getController() {
-        return controller;
-    }
-
-    public ServiceContainer getContainer() {
-        return container;
-    }
-
-    protected ModelNode createOperation(String operationName, String... address) {
-        ModelNode operation = new ModelNode();
-        operation.get(OP).set(operationName);
-        if (address.length > 0) {
-            for (String addr : address) {
-                operation.get(OP_ADDR).add(addr);
-            }
-        } else {
-            operation.get(OP_ADDR).setEmptyList();
-        }
-
-        return operation;
+    protected ControllerTestBase() {
+        super();
     }
 
     protected ModelNode createOperation(String operationName, PathAddress address) {
@@ -115,19 +76,6 @@ public abstract class AbstractControllerTestBase {
         operation.get(OP).set(operationName);
         operation.get(OP_ADDR).setEmptyList();
         return operation;
-    }
-
-    public ModelNode executeForResult(ModelNode operation) throws OperationFailedException {
-        return executeCheckNoFailure(operation).get(RESULT);
-    }
-
-    public void executeForFailure(ModelNode operation) {
-        try {
-            ModelNode result = executeForResult(operation);
-            Assert.fail(operation + " did not fail; returned " + result);
-        } catch (OperationFailedException expected) {
-            // ignore
-        }
     }
 
     public ModelNode executeCheckNoFailure(ModelNode operation) throws OperationFailedException {
@@ -151,8 +99,7 @@ public abstract class AbstractControllerTestBase {
 
     @Before
     public void setupController() throws InterruptedException {
-        container = ServiceContainer.Factory.create("test");
-        ServiceTarget target = container.subTarget();
+        ServiceTarget target = getServiceTarget();
         ModelControllerService svc = createModelControllerService(processType);
         target.addService(ServiceName.of("ModelController")).setInstance(svc).install();
         svc.awaitStartup(30, TimeUnit.SECONDS);
@@ -165,24 +112,11 @@ public abstract class AbstractControllerTestBase {
 
     @After
     public void shutdownServiceContainer() {
-        if (container != null) {
-            container.shutdown();
-            try {
-                container.awaitTermination(30, TimeUnit.SECONDS);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            } finally {
-                container = null;
-            }
-        }
+        shutdownContainer();
     }
 
     protected ModelControllerService createModelControllerService(ProcessType processType) {
         return new ModelControllerService(processType);
-    }
-
-    protected void addBootOperations(List<ModelNode> bootOperations) {
-
     }
 
     protected NotificationHandlerRegistry getNotificationHandlerRegistry() {
@@ -218,80 +152,9 @@ public abstract class AbstractControllerTestBase {
 
         protected void initModel(ManagementModel managementModel, Resource modelControllerResource) {
             try {
-                AbstractControllerTestBase.this.initModel(managementModel);
+                ControllerTestBase.this.initModel(managementModel);
             } catch (Exception e) {
                 e.printStackTrace();
-            }
-        }
-    }
-
-    static class EmptyConfigurationPersister extends AbstractConfigurationPersister {
-
-        public EmptyConfigurationPersister() {
-            super(null);
-        }
-
-        public EmptyConfigurationPersister(XMLElementWriter<ModelMarshallingContext> rootDeparser) {
-            super(rootDeparser);
-        }
-
-        @Override
-        public PersistenceResource store(final ModelNode model, Set<PathAddress> affectedAddresses) {
-            return NullPersistenceResource.INSTANCE;
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        public List<ModelNode> load() {
-            return new ArrayList<ModelNode>();
-        }
-
-        private static class NullPersistenceResource implements ConfigurationPersister.PersistenceResource {
-
-            private static final NullPersistenceResource INSTANCE = new NullPersistenceResource();
-
-            @Override
-            public void commit() {
-            }
-
-            @Override
-            public void rollback() {
-            }
-        }
-    }
-
-    static void createModel(final OperationContext context, final ModelNode node) {
-        createModel(context, PathAddress.EMPTY_ADDRESS, node);
-    }
-
-    static void createModel(final OperationContext context, final PathAddress base, final ModelNode node) {
-        if (!node.isDefined()) {
-            return;
-        }
-        final ManagementResourceRegistration registration = context.getResourceRegistrationForUpdate();
-        final Set<String> children = registration.getChildNames(base);
-        final ModelNode current = new ModelNode();
-        final Resource resource = base.size() == 0 ? context.readResourceForUpdate(PathAddress.EMPTY_ADDRESS) : context.createResource(base);
-        if (node.getType() == ModelType.OBJECT) {
-            for (final String key : node.keys()) {
-                if (!children.contains(key)) {
-                    current.get(key).set(node.get(key));
-                }
-            }
-            resource.getModel().set(current);
-        } else {
-            resource.getModel().set(node);
-            return;
-        }
-        if (children != null && !children.isEmpty()) {
-            for (final String childType : children) {
-                if (node.hasDefined(childType)) {
-                    for (final String key : node.get(childType).keys()) {
-                        createModel(context, base.append(PathElement.pathElement(childType, key)), node.get(childType, key));
-                    }
-                }
             }
         }
     }

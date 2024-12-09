@@ -40,7 +40,7 @@ import org.junit.Test;
 /**
  * @author <a href="kabir.khan@jboss.com">Kabir Khan</a>
  */
-public class OrderedChildResourceTestCase extends AbstractControllerTestBase {
+public class OrderedChildResourceTestCase extends ControllerTestBase {
 
     private static final PathElement PARENT_MAIN = PathElement.pathElement("parent", "main");
     private static final PathElement CHILD = PathElement.pathElement("child");

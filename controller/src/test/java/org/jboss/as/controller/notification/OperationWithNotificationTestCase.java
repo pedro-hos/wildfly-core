@@ -22,7 +22,7 @@ import org.jboss.as.controller.PathAddress;
 import org.jboss.as.controller.SimpleOperationDefinitionBuilder;
 import org.jboss.as.controller.descriptions.NonResolvingResourceDescriptionResolver;
 import org.jboss.as.controller.registry.ManagementResourceRegistration;
-import org.jboss.as.controller.test.AbstractControllerTestBase;
+import org.jboss.as.controller.test.ControllerTestBase;
 import org.jboss.dmr.ModelNode;
 import org.junit.Test;
 
@@ -32,7 +32,7 @@ import org.junit.Test;
  *
  * @author <a href="http://jmesnil.net/">Jeff Mesnil</a> (c) 2013 Red Hat inc.
  */
-public class OperationWithNotificationTestCase extends AbstractControllerTestBase {
+public class OperationWithNotificationTestCase extends ControllerTestBase {
 
     private static final String MY_OPERATION = "my-operation";
     private static final String MY_NOTIFICATION_TYPE = "my-notification-type";

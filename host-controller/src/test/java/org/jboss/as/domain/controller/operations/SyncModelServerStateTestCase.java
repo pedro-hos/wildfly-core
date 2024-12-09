@@ -96,7 +96,7 @@ import org.jboss.as.host.controller.mgmt.DomainHostExcludeRegistry;
 import org.jboss.as.host.controller.mgmt.HostControllerRegistrationHandler;
 import org.jboss.as.host.controller.mgmt.HostInfo;
 import org.jboss.as.host.controller.model.host.HostResourceDefinition;
-import org.jboss.as.host.controller.util.AbstractControllerTestBase;
+import org.jboss.as.host.controller.util.HostControllerTestBase;
 import org.jboss.as.repository.ContentReference;
 import org.jboss.as.repository.HostFileRepository;
 import org.jboss.as.server.operations.ServerProcessStateHandler;
@@ -116,7 +116,7 @@ import org.junit.Test;
  *
  * @author <a href="mailto:kabir.khan@jboss.com">Kabir Khan</a>
  */
-public class SyncModelServerStateTestCase extends AbstractControllerTestBase  {
+public class SyncModelServerStateTestCase extends HostControllerTestBase  {
 
     static final AttributeDefinition ATTR = new SimpleAttributeDefinitionBuilder("attr", ModelType.STRING, true).build();
     static final OperationDefinition TRIGGER_SYNC = new SimpleOperationDefinitionBuilder("trigger-sync", NonResolvingResourceDescriptionResolver.INSTANCE)

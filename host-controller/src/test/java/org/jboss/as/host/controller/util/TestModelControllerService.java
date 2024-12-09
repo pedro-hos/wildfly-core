@@ -48,12 +48,12 @@ public abstract class TestModelControllerService extends AbstractControllerServi
     final AtomicBoolean state = new AtomicBoolean(true);
     private final CountDownLatch latch = new CountDownLatch(2);
     private final HostControllerRegistrationHandler.OperationExecutor internalExecutor;
-    private final AbstractControllerTestBase.DelegatingResourceDefinitionInitializer initializer;
+    private final HostControllerTestBase.DelegatingResourceDefinitionInitializer initializer;
     private ManagementResourceRegistration rootMRR;
 
     protected TestModelControllerService(final ProcessType processType, final ConfigurationPersister configurationPersister, final ControlledProcessState processState,
                                          final ResourceDefinition rootResourceDefinition, final ManagedAuditLogger auditLogger,
-                                         final AbstractControllerTestBase.DelegatingResourceDefinitionInitializer initializer,
+                                         final HostControllerTestBase.DelegatingResourceDefinitionInitializer initializer,
                                          final CapabilityRegistry capabilityRegistry) {
         super(processType, new RunningModeControl(RunningMode.NORMAL), configurationPersister, processState, rootResourceDefinition,
                 null, ExpressionResolver.TEST_RESOLVER, auditLogger, new DelegatingConfigurableAuthorizer(), new ManagementSecurityIdentitySupplier(), capabilityRegistry);

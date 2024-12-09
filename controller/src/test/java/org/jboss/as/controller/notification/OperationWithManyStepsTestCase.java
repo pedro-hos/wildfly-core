@@ -25,7 +25,7 @@ import org.jboss.as.controller.SimpleAttributeDefinitionBuilder;
 import org.jboss.as.controller.SimpleOperationDefinitionBuilder;
 import org.jboss.as.controller.descriptions.NonResolvingResourceDescriptionResolver;
 import org.jboss.as.controller.registry.ManagementResourceRegistration;
-import org.jboss.as.controller.test.AbstractControllerTestBase;
+import org.jboss.as.controller.test.ControllerTestBase;
 import org.jboss.dmr.ModelNode;
 import org.jboss.dmr.ModelType;
 import org.junit.Test;
@@ -35,7 +35,7 @@ import org.junit.Test;
  *
  * @author <a href="http://jmesnil.net/">Jeff Mesnil</a> (c) 2014 Red Hat inc.
  */
-public class OperationWithManyStepsTestCase extends AbstractControllerTestBase {
+public class OperationWithManyStepsTestCase extends ControllerTestBase {
 
     private static final String MY_OPERATION = "my-operation";
     private static final String MY_NOTIFICATION_TYPE = "my-notification-type";

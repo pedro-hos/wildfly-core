@@ -72,7 +72,7 @@ import org.jboss.as.domain.management.audit.EnvironmentNameReader;
 import org.jboss.as.jmx.ExposeModelResourceResolved;
 import org.jboss.as.jmx.JMXExtension;
 import org.jboss.as.jmx.MBeanServerService;
-import org.jboss.as.jmx.test.util.AbstractControllerTestBase;
+import org.jboss.as.jmx.test.util.JMXControllerTestBase;
 import org.jboss.as.server.jmx.PluggableMBeanServer;
 import org.jboss.dmr.ModelNode;
 import org.jboss.dmr.ModelType;
@@ -96,7 +96,7 @@ import org.wildfly.security.auth.server.ServerAuthenticationContext;
  *
  * @author <a href="kabir.khan@jboss.com">Kabir Khan</a>
  */
-public class JmxFacadeRbacEnabledTestCase extends AbstractControllerTestBase {
+public class JmxFacadeRbacEnabledTestCase extends JMXControllerTestBase {
     volatile DelegatingConfigurableAuthorizer authorizer;
     volatile ManagementSecurityIdentitySupplier securityIdentitySupplier;
     volatile MBeanServer server;

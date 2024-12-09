@@ -44,14 +44,14 @@ import org.jboss.as.controller.operations.global.GlobalNotifications;
 import org.jboss.as.controller.operations.global.GlobalOperationHandlers;
 import org.jboss.as.controller.registry.ManagementResourceRegistration;
 import org.jboss.as.controller.registry.Resource;
-import org.jboss.as.controller.test.AbstractControllerTestBase;
+import org.jboss.as.controller.test.ControllerTestBase;
 import org.jboss.dmr.ModelNode;
 import org.junit.Test;
 
 /**
  * @author <a href="http://jmesnil.net/">Jeff Mesnil</a> (c) 2013 Red Hat inc.
  */
-public class GlobalNotificationsTestCase extends AbstractControllerTestBase {
+public class GlobalNotificationsTestCase extends ControllerTestBase {
 
     public static final SimpleAttributeDefinition MY_ATTRIBUTE = create("my-attribute", LONG)
             .setRequired(false)

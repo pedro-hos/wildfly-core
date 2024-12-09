@@ -36,7 +36,7 @@ import org.jboss.as.controller.descriptions.NonResolvingResourceDescriptionResol
 import org.jboss.as.controller.operations.global.GlobalNotifications;
 import org.jboss.as.controller.operations.global.GlobalOperationHandlers;
 import org.jboss.as.controller.registry.ManagementResourceRegistration;
-import org.jboss.as.controller.test.AbstractControllerTestBase;
+import org.jboss.as.controller.test.ControllerTestBase;
 import org.jboss.dmr.ModelNode;
 import org.jboss.dmr.ModelType;
 import org.junit.After;
@@ -47,7 +47,7 @@ import org.junit.Test;
 /**
  * @author Tomaz Cerar (c) 2015 Red Hat Inc.
  */
-public class EnhancedSyntaxTestCase extends AbstractControllerTestBase {
+public class EnhancedSyntaxTestCase extends ControllerTestBase {
 
     private static final StringListAttributeDefinition LIST_ATTRIBUTE = new StringListAttributeDefinition.Builder("my-list-attribute")
             .setAllowDuplicates(false)

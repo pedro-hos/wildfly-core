@@ -45,7 +45,7 @@ import org.junit.Test;
  *
  * @author Brian Stansberry
  */
-public class WildcardReadResourceDescriptionUnitTestCase  extends AbstractControllerTestBase {
+public class WildcardReadResourceDescriptionUnitTestCase  extends ControllerTestBase {
 
     private static final PathElement webSubsystem = PathElement.pathElement("subsystem", "web");
     private static final PathElement connector = PathElement.pathElement("connector");

@@ -25,12 +25,12 @@ import org.jboss.as.domain.management.audit.EnvironmentNameReader;
 import org.jboss.msc.service.StabilityMonitor;
 
 /**
- * An extension of {@link AbstractControllerTestBase} which ensures the core
+ * An extension of {@link DomainManagementControllerTestBase} which ensures the core
  * management resources are defined.
  *
  * @author <a href="mailto:darran.lofthouse@jboss.com">Darran Lofthouse</a>
  */
-public class ManagementControllerTestBase extends AbstractControllerTestBase {
+public class ManagementControllerTestBase extends DomainManagementControllerTestBase {
 
     protected volatile PathManagerService pathManagerService;
     protected volatile ManagedAuditLogger auditLogger;

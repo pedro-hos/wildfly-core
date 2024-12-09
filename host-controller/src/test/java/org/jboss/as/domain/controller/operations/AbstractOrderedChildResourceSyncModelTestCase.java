@@ -50,7 +50,7 @@ import org.jboss.as.domain.controller.resources.ProfileResourceDefinition;
 import org.jboss.as.domain.controller.resources.ServerGroupResourceDefinition;
 import org.jboss.as.host.controller.ignored.IgnoredDomainResourceRegistry;
 import org.jboss.as.host.controller.mgmt.HostControllerRegistrationHandler;
-import org.jboss.as.host.controller.util.AbstractControllerTestBase;
+import org.jboss.as.host.controller.util.HostControllerTestBase;
 import org.jboss.as.repository.ContentReference;
 import org.jboss.as.repository.HostFileRepository;
 import org.jboss.as.server.services.net.SocketBindingGroupResourceDefinition;
@@ -62,7 +62,7 @@ import org.junit.Assert;
  *
  * @author <a href="kabir.khan@jboss.com">Kabir Khan</a>
  */
-public class AbstractOrderedChildResourceSyncModelTestCase extends AbstractControllerTestBase {
+public class AbstractOrderedChildResourceSyncModelTestCase extends HostControllerTestBase {
 
     private final ExtensionRegistry extensionRegistry = ExtensionRegistry.builder(ProcessType.HOST_CONTROLLER).build();
     private volatile IgnoredDomainResourceRegistry ignoredDomainResourceRegistry;

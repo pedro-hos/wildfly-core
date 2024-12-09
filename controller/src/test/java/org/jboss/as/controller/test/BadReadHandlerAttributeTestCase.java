@@ -36,7 +36,7 @@ import org.junit.Test;
  *
  * @author <a href="kabir.khan@jboss.com">Kabir Khan</a>
  */
-public class BadReadHandlerAttributeTestCase extends AbstractControllerTestBase {
+public class BadReadHandlerAttributeTestCase extends ControllerTestBase {
 
     private static ModelNode createdResource = null;
 

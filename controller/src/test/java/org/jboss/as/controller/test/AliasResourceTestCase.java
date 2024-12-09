@@ -74,7 +74,7 @@ import org.junit.Test;
 /**
  * @author <a href="kabir.khan@jboss.com">Kabir Khan</a>
  */
-public class AliasResourceTestCase extends AbstractControllerTestBase {
+public class AliasResourceTestCase extends ControllerTestBase {
 
     private static final String CORE = "core";
     private static final String ALIASED = "aliased";

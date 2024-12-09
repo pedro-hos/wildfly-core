@@ -637,7 +637,7 @@ public abstract class AbstractProxyControllerTest {
                     mainModel.get(SERVER, "serverA");  //Create an empty node to be got from the proxied model
                     mainModel.get("profile", "profileA").get(NAME).set("Profile A");
 
-                    AbstractControllerTestBase.createModel(context, mainModel);
+                    ControllerTestBase.createModel(context, mainModel);
                 }
             });
 
@@ -689,7 +689,7 @@ public abstract class AbstractProxyControllerTest {
                             proxyModel.get("serverchild", "svrA", "child", "childA", "name").set("childName");
                             proxyModel.get("serverchild", "svrA", "child", "childA", "value").set("childValue");
 
-                            AbstractControllerTestBase.createModel(context, proxyModel);
+                            ControllerTestBase.createModel(context, proxyModel);
                         }
                     }
             );

@@ -52,7 +52,7 @@ import org.jboss.as.jmx.JMXSubsystemRootResource;
 import org.jboss.as.jmx.JmxAuditLogHandlerReferenceResourceDefinition;
 import org.jboss.as.jmx.JmxAuditLoggerResourceDefinition;
 import org.jboss.as.jmx.MBeanServerService;
-import org.jboss.as.jmx.test.util.AbstractControllerTestBase;
+import org.jboss.as.jmx.test.util.JMXControllerTestBase;
 import org.jboss.as.server.jmx.PluggableMBeanServer;
 import org.jboss.dmr.ModelNode;
 import org.jboss.msc.service.ServiceController;
@@ -67,7 +67,7 @@ import org.junit.Test;
  *
  * @author Kabir Khan
  */
-public class JmxAuditLogHandlerTestCase extends AbstractControllerTestBase {
+public class JmxAuditLogHandlerTestCase extends JMXControllerTestBase {
 
     volatile PathManagerService pathManagerService;
     volatile ManagedAuditLogger auditLogger;

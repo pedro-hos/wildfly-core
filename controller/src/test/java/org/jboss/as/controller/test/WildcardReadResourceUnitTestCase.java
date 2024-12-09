@@ -42,7 +42,7 @@ import org.junit.Test;
  *
  * @author Emanuel Muckenhuber
  */
-public class WildcardReadResourceUnitTestCase extends AbstractControllerTestBase {
+public class WildcardReadResourceUnitTestCase extends ControllerTestBase {
 
     private static final PathElement host = PathElement.pathElement("host");
     private static final PathElement server = PathElement.pathElement("server");

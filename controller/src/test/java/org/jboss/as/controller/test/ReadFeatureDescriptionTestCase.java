@@ -67,7 +67,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 
-public class ReadFeatureDescriptionTestCase extends AbstractControllerTestBase {
+public class ReadFeatureDescriptionTestCase extends ControllerTestBase {
 
     private static final String TEST_EXTENSION = "org.wildfly.testextension";
     private static final String TEST_SUBSYSTEM = "testsubsystem";

@@ -41,7 +41,7 @@ import org.junit.Test;
  *
  * @author Alexey Loubyansky
  */
-public class ReadConfigAsFeaturesTestCase extends AbstractControllerTestBase {
+public class ReadConfigAsFeaturesTestCase extends ControllerTestBase {
 
     private static final String NON_FEATURE = "non-feature";
     private static final String RESOURCE = "resource";

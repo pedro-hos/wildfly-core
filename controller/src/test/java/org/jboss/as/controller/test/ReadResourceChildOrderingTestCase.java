@@ -35,7 +35,7 @@ import org.junit.Test;
 /**
  * @author <a href="kabir.khan@jboss.com">Kabir Khan</a>
  */
-public class ReadResourceChildOrderingTestCase extends AbstractControllerTestBase {
+public class ReadResourceChildOrderingTestCase extends ControllerTestBase {
 
     private static final PathElement testSubsystem = PathElement.pathElement("test");
     private static final String[] STR = new String[]{"g", "e", "l", "d", "h", "h", "k", "f", "a", "b", "j", "g", "c", "i"};

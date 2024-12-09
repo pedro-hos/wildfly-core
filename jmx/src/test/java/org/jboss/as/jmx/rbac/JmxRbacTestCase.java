@@ -64,7 +64,7 @@ import org.jboss.as.jmx.AuthorizingMBeanServer;
 import org.jboss.as.jmx.JMXExtension;
 import org.jboss.as.jmx.JMXSubsystemRootResource;
 import org.jboss.as.jmx.MBeanServerService;
-import org.jboss.as.jmx.test.util.AbstractControllerTestBase;
+import org.jboss.as.jmx.test.util.JMXControllerTestBase;
 import org.jboss.as.server.jmx.PluggableMBeanServer;
 import org.jboss.dmr.ModelNode;
 import org.jboss.dmr.ModelType;
@@ -89,7 +89,7 @@ import org.xnio.IoUtils;
  *
  * @author <a href="kabir.khan@jboss.com">Kabir Khan</a>
  */
-public abstract class JmxRbacTestCase extends AbstractControllerTestBase {
+public abstract class JmxRbacTestCase extends JMXControllerTestBase {
     volatile DelegatingConfigurableAuthorizer authorizer;
     volatile ManagementSecurityIdentitySupplier securityIdentitySupplier;
     volatile MBeanServer server;

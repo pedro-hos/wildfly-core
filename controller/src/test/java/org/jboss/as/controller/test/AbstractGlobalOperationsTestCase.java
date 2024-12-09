@@ -79,7 +79,7 @@ import org.jboss.dmr.ValueExpression;
 /**
  * @author <a href="kabir.khan@jboss.com">Kabir Khan</a>
  */
-public abstract class AbstractGlobalOperationsTestCase extends AbstractControllerTestBase {
+public abstract class AbstractGlobalOperationsTestCase extends ControllerTestBase {
 
     private final AccessType expectedRwAttributeAccess;
 

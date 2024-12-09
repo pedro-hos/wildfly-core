@@ -47,7 +47,7 @@ import org.junit.Test;
  *
  * @author <a href="mailto:ehugonne@redhat.com">Emmanuel Hugonnet</a> (c) 2014 Red Hat, inc.
  */
-public class WriteAttributeOperationTestCase extends AbstractControllerTestBase {
+public class WriteAttributeOperationTestCase extends ControllerTestBase {
 
     private static final String BOOLEAN_ATT_NAME = "boolean-att";
     private static final String LONG_ATT_NAME = "long-att";

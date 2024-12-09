@@ -44,7 +44,7 @@ import org.junit.Test;
  *
  * @author <a href="mailto:ehugonne@redhat.com">Emmanuel Hugonnet</a> (c) 2015 Red Hat, inc.
  */
-public class ReadAttributeGroupTestCase extends AbstractControllerTestBase {
+public class ReadAttributeGroupTestCase extends ControllerTestBase {
     @BeforeClass
     public static void setSystemPropertyForResolution() {
         System.setProperty("my.value", "resolved");
