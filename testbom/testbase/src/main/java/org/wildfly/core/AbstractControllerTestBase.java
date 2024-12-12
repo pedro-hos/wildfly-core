@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-package org.wildfly.test.controller.base;
+package org.wildfly.core;
 
 import static org.jboss.as.controller.descriptions.ModelDescriptionConstants.FAILED;
 import static org.jboss.as.controller.descriptions.ModelDescriptionConstants.FAILURE_DESCRIPTION;
@@ -156,7 +156,7 @@ public abstract class AbstractControllerTestBase {
         }
     }
 
-    protected static class EmptyConfigurationPersister extends AbstractConfigurationPersister {
+    public static class EmptyConfigurationPersister extends AbstractConfigurationPersister {
 
         public EmptyConfigurationPersister() {
             super(null);

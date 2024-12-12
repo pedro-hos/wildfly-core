@@ -26,8 +26,8 @@ import org.jboss.msc.service.ServiceBuilder;
 import org.jboss.msc.service.ServiceTarget;
 import org.junit.After;
 import org.junit.Before;
+import org.wildfly.core.AbstractControllerTestBase;
 import org.wildfly.security.auth.server.SecurityIdentity;
-import org.wildfly.test.controller.base.AbstractControllerTestBase;
 
 /**
  * @author Emanuel Muckenhuber

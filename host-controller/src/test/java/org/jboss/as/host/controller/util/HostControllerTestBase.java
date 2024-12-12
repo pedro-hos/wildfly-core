@@ -66,7 +66,7 @@ import org.jboss.msc.service.ServiceTarget;
 import org.jboss.vfs.VirtualFile;
 import org.junit.After;
 import org.junit.Before;
-import org.wildfly.test.controller.base.AbstractControllerTestBase;
+import org.wildfly.core.AbstractControllerTestBase;
 
 /**
  * @author Emanuel Muckenhuber

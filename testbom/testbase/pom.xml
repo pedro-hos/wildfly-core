@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<artifactId>wildfly-core-testbom</artifactId>
+		<groupId>org.wildfly.core</groupId>
+		<version>27.0.0.Beta5-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>wildfly-testbase</artifactId>
+
+	<name>WildFly: Test Base</name>
+	<description>WildFly: Test Base helps standardize and simplify the creation of new tests, ensuring consistency and reducing code duplication across test suites.</description>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.wildfly.core</groupId>
+			<artifactId>wildfly-controller</artifactId>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>compile</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+				<includes>
+					<include>*.xml</include>
+				</includes>
+			</resource>
+			<resource>
+				<directory>src/main/resources/org</directory>
+				<filtering>false</filtering>
+				<targetPath>org</targetPath>
+			</resource>
+		</resources>
+	</build>
+
+</project>

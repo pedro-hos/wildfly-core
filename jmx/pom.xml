@@ -41,6 +41,11 @@
             <artifactId>wildfly-server</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.wildfly.core</groupId>
+            <artifactId>wildfly-controller</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
             <groupId>org.jboss.remotingjmx</groupId>
             <artifactId>remoting-jmx</artifactId>
         </dependency>
@@ -115,11 +120,6 @@
 			<artifactId>junit</artifactId>
 			<scope>test</scope>
 		</dependency>
-		<dependency>
-			<groupId>org.wildfly.core</groupId>
-			<artifactId>wildfly-core-testsuite-shared</artifactId>
-			<scope>test</scope>
-        </dependency>
     </dependencies>
     <build>
         <plugins>

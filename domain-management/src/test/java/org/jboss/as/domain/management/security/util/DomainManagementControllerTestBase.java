@@ -8,6 +8,7 @@ package org.jboss.as.domain.management.security.util;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import org.jboss.as.controller.AbstractControllerTestBase;
 import org.jboss.as.controller.ControlledProcessState;
 import org.jboss.as.controller.ManagementModel;
 import org.jboss.as.controller.ModelController;
@@ -24,7 +25,6 @@ import org.jboss.msc.service.ServiceName;
 import org.jboss.msc.service.ServiceTarget;
 import org.junit.After;
 import org.junit.Before;
-import org.wildfly.test.controller.base.AbstractControllerTestBase;
 
 /**
  * @author Emanuel Muckenhuber

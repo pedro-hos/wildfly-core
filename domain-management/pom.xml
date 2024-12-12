@@ -103,12 +103,6 @@
             <artifactId>mockito-core</artifactId>
             <scope>test</scope>
         </dependency>
-        
-        <dependency>
-			<groupId>org.wildfly.core</groupId>
-			<artifactId>wildfly-core-testsuite-shared</artifactId>
-			<scope>test</scope>
-        </dependency>
 
         <dependency>
             <groupId>org.wildfly.security</groupId>
@@ -154,6 +148,6 @@
             <groupId>org.wildfly.security</groupId>
             <artifactId>wildfly-elytron-x500-cert</artifactId>
         </dependency>
-
+        
     </dependencies>
 </project>

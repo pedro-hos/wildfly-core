@@ -18,6 +18,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
 
+import org.jboss.as.controller.AbstractControllerTestBase;
 import org.jboss.as.controller.CapabilityRegistry;
 import org.jboss.as.controller.ControlledProcessState;
 import org.jboss.as.controller.ManagementModel;
@@ -41,7 +42,6 @@ import org.jboss.msc.service.ServiceTarget;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.wildfly.test.controller.base.AbstractControllerTestBase;
 
 /**
  * @author Emanuel Muckenhuber
